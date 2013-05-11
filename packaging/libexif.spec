@@ -9,7 +9,6 @@ Source:         %{name}-%{version}.tar.bz2
 Source1:        baselibs.conf
 BuildRequires:  doxygen
 BuildRequires:  pkg-config
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %define debug_package_requires %{name} = %{version}-%{release}
 
@@ -48,6 +47,7 @@ make check
 %postun  -p /sbin/ldconfig
 
 %files -f %{name}-12.lang
+%license COPYING
 %defattr(-,root,root)
 %{_libdir}/*.so.*
 
