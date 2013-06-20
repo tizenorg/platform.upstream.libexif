@@ -21,6 +21,7 @@ exif_data_get_byte_order
 exif_data_get_data_type
 exif_data_get_log
 exif_data_get_mnote_data
+exif_data_get_data_order
 exif_data_load_data
 exif_data_log
 exif_data_new
@@ -36,6 +37,11 @@ exif_data_set_data_type
 exif_data_set_option
 exif_data_unref
 exif_data_unset_option
+exif_data_mnote_data_new
+exif_data_mnote_set_mem_for_adding_entry
+exif_data_mnote_set_add_entry
+exif_data_mnote_set_add_entry_subtag
+exif_data_mnote_set_add_entry_string
 exif_entry_dump
 exif_entry_fix
 exif_entry_free
@@ -92,6 +98,7 @@ exif_mnote_data_load
 exif_mnote_data_log
 exif_mnote_data_olympus_new
 exif_mnote_data_pentax_new
+exif_mnote_data_samsung_new
 exif_mnote_data_ref
 exif_mnote_data_save
 exif_mnote_data_set_byte_order
@@ -126,4 +133,11 @@ mnote_pentax_entry_get_value
 mnote_pentax_tag_get_description
 mnote_pentax_tag_get_name
 mnote_pentax_tag_get_title
+mnote_samsung_entry_get_value
+mnote_samsung_entry_set_value_by_index
+mnote_samsung_entry_set_value_by_string
+mnote_samsung_entry_set_value_by_subtag
+mnote_samsung_tag_get_description
+mnote_samsung_tag_get_name
+mnote_samsung_tag_get_title
 exif_loader_get_buf

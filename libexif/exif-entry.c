@@ -941,6 +941,10 @@ exif_entry_get_value (ExifEntry *e, char *val, unsigned int maxlen)
 		}
 		break;
 
+	case EXIF_TAG_MAKE:
+		strncpy (val, (char *) e->data, MIN (e->size, maxlen));
+		break;
+
 	case EXIF_TAG_EXIF_VERSION:
 		CF (e, EXIF_FORMAT_UNDEFINED, val, maxlen);
 		CC (e, 4, val, maxlen);

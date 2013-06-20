@@ -42,6 +42,16 @@ typedef struct _ExifDataPrivate ExifDataPrivate;
 #include <libexif/exif-mnote-data.h>
 #include <libexif/exif-mem.h>
 
+typedef enum{
+	MAKER_CANON		= 1,
+	MAKER_OLYMPUS	= 2,
+	MAKER_PENTAX		= 3,
+	MAKER_NIKON		= 4,
+	MAKER_CASIO		= 5,
+	MAKER_FUJI 		= 6,
+	MAKER_SAMSUNG	= 7
+}Manufacturer;
+
 /*! Represents the entire EXIF data found in an image */
 struct _ExifData
 {
@@ -149,6 +159,8 @@ void          exif_data_set_byte_order  (ExifData *data, ExifByteOrder order);
  */
 ExifMnoteData *exif_data_get_mnote_data (ExifData *d);
 
+ExifByteOrder exif_data_get_data_order (ExifData *d);
+
 /*! Fix the EXIF data to bring it into specification. Call #exif_content_fix
  * on each IFD to fix existing entries, create any new entries that are
  * mandatory but do not yet exist, and remove any entries that are not
@@ -237,6 +249,63 @@ void exif_data_dump (ExifData *data);
  * \param[in] log #ExifLog
  */
 void exif_data_log  (ExifData *data, ExifLog *log);
+
+/*!  Create new mnote data and set up related function pointers for particular manufacturer.
+ *
+ * \param[in,out] d EXIF data
+ * \param[in] maker Manufacturer
+ * \param[in] o option
+ * \return 1 if  normal, else 0 if abnormal
+ */
+int exif_data_mnote_data_new(ExifData *d,  Manufacturer maker, ExifDataOption o);
+
+/*! Allocate makernote entries memory for particular manufacturer.
+ *
+ * \param[in,out] d EXIF Makernote data
+ * \param[in] maker Manufacturer
+ * \return 1 if  normal, else 0 if abnormal
+ */
+int exif_data_mnote_set_mem_for_adding_entry(ExifMnoteData *md, Manufacturer maker);
+
+/*! Add a makernote entry for particular manufacturer.
+ *
+ * \param[in,out] d EXIF Makernote data
+ * \param[in] maker Manufacturer
+ * \param[in] tag Manufacturer specified makernote tag
+ * \param[in] fmt Exifformat
+ * \param[in] components The number of components
+ * \param[in] id Index
+ * \return 1 if  normal, else 0 if abnormal
+ */
+int exif_data_mnote_set_add_entry(ExifMnoteData *md, Manufacturer maker, int tag, ExifFormat fmt, int components, int id);
+
+/*! Add a makernote entry using subtag information for particular manufacturer.
+ *
+ * \param[in,out] d EXIF Makernote data
+ * \param[in] maker Manufacturer
+ * \param[in] tag Manufacturer specified makernote tag
+ * \param[in] fmt Exifformat
+ * \param[in] components The number of components
+ * \param[in] subtag1 Manufacturer specified makernote subtag
+ * \param[in] id1 Index for subtag1
+ * \param[in] subtag2 Manufacturer specified makernote subtag
+ * \param[in] id2 Indoex for subtag2
+ * \param[in] val Integer value
+ * \return 1 if  normal, else 0 if abnormal
+*/
+int exif_data_mnote_set_add_entry_subtag(ExifMnoteData* md, Manufacturer maker, int tag, ExifFormat fmt, int components, int subtag1, int id1, int subtag2, int id2, int val);
+
+/*! Add a makernote entry using string information for particular manufacturer.
+ *
+ * \param[in,out] d EXIF Makernote data
+ * \param[in] maker Manufacturer
+ * \param[in] tag Manufacturer specified makernote tag
+ * \param[in] fmt Exifformat
+ * \param[in] components The number of components
+ * \param[in] string String value to be written
+ * \return 1 if  normal, else 0 if abnormal
+ */
+int exif_data_mnote_set_add_entry_string(ExifMnoteData* md, Manufacturer maker, int tag, ExifFormat fmt, int components, const char* string);
 
 /*! Return an #ExifEntry for the given tag if found in any IFD.
  * Each IFD is searched in turn and the first containing a tag with

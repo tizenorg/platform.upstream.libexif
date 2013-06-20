@@ -9,6 +9,7 @@ Source:         %{name}-%{version}.tar.bz2
 Source1:        baselibs.conf
 BuildRequires:  doxygen
 BuildRequires:  pkg-config
+BuildRequires:  gettext-tools
 
 %define debug_package_requires %{name} = %{version}-%{release}
 
@@ -30,10 +31,11 @@ digital cameras.
 %setup -q
 
 %build
-%configure --with-pic \
+%reconfigure --with-pic \
 	--disable-static \
 	--with-doc-dir=%{_docdir}/%{name}
-make %{?_smp_mflags}
+make 
+### %{?_smp_mflags}
 
 %check
 make check

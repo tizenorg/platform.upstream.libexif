@@ -6,6 +6,7 @@ include canon/Makefile-files
 include fuji/Makefile-files
 include olympus/Makefile-files
 include pentax/Makefile-files
+include samsung/Makefile-files
 
 # The -no-undefined makes it possible to build DLLs for Windows,
 # or shared libraries for Tru64 or AIX (according to the autobook
@@ -35,15 +36,20 @@ libexif_la_DEPENDENCIES = \
 	libmnote-canon.la		\
 	libmnote-fuji.la		\
 	libmnote-olympus.la	\
-	libmnote-pentax.la
+	libmnote-pentax.la	\
+	libmnote-samsung.la
 libexif_la_LIBADD =			\
 	$(LTLIBINTL)			\
 	libmnote-canon.la		\
 	libmnote-fuji.la	\
 	libmnote-olympus.la	\
-	libmnote-pentax.la
+	libmnote-pentax.la	\
+	libmnote-samsung.la
 
 libexifincludedir = $(includedir)/libexif
+samsungincludedir = $(includedir)/libexif/samsung
+samsunginclude_HEADERS = samsung/mnote-samsung-tag.h
+
 libexifinclude_HEADERS = 	\
 	exif-byte-order.h	\
 	exif-content.h		\
@@ -58,7 +64,7 @@ libexifinclude_HEADERS = 	\
 	exif-mnote-data.h	\
 	exif-tag.h		\
 	exif-utils.h		\
-	_stdint.h
+	_stdint.h 
 
 EXTRA_DIST += exif-system.h exif.h
 
