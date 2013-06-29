@@ -7,6 +7,7 @@ Url:            http://libexif.sourceforge.net
 Group:          System/Libraries
 Source:         %{name}-%{version}.tar.bz2
 Source1:        baselibs.conf
+Source1001: 	libexif.manifest
 BuildRequires:  doxygen
 BuildRequires:  pkg-config
 BuildRequires:  gettext-tools
@@ -29,6 +30,7 @@ digital cameras.
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 %reconfigure --with-pic \
@@ -49,11 +51,13 @@ make check
 %postun  -p /sbin/ldconfig
 
 %files -f %{name}-12.lang
+%manifest %{name}.manifest
 %license COPYING
 %defattr(-,root,root)
 %{_libdir}/*.so.*
 
 %files devel
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %doc %{_docdir}/%{name}
 %{_libdir}/*.so
