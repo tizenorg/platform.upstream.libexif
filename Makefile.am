@@ -1,4 +1,4 @@
-SUBDIRS = m4m po libexif test doc binary contrib
+SUBDIRS = libexif
 
 EXTRA_DIST = @PACKAGE_TARNAME@.spec README-Win32.txt
 
@@ -12,7 +12,7 @@ EXTRA_DIST += libexif-uninstalled.pc.in
 
 ACLOCAL_AMFLAGS = -I auto-m4 -I m4m
 
-doc_DATA = README AUTHORS NEWS ChangeLog ABOUT-NLS COPYING
+#doc_DATA = README AUTHORS NEWS ChangeLog ABOUT-NLS COPYING
 
 #######################################################################
 # Help for the maintainer

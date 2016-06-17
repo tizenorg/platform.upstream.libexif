@@ -1,16 +1,15 @@
 Name:           libexif
 Version:        0.6.21
-Release:        0
+Release:        1
 License:        LGPL-2.1+
 Summary:        An EXIF Tag Parsing Library for Digital Cameras
 Url:            http://libexif.sourceforge.net
 Group:          System/Libraries
 Source:         %{name}-%{version}.tar.bz2
 Source1:        baselibs.conf
-Source1001: 	libexif.manifest
-BuildRequires:  doxygen
-BuildRequires:  pkg-config
-BuildRequires:  gettext-tools
+Source1001: 	   libexif.manifest
+Requires(post):  /sbin/ldconfig
+Requires(postun):  /sbin/ldconfig
 
 %define debug_package_requires %{name} = %{version}-%{release}
 
@@ -22,7 +21,6 @@ digital cameras.
 Summary:        An EXIF Tag Parsing Library for Digital Cameras (Development files)
 Group:          Development/Libraries/C and C++
 Requires:       %{name} = %{version}
-Requires:       glibc-devel
 
 %description devel
 This library is used to parse EXIF information from JPEGs created by
@@ -33,35 +31,33 @@ digital cameras.
 cp %{SOURCE1001} .
 
 %build
-%reconfigure --with-pic \
+sh ./autogen.sh
+%configure --with-pic \
 	--disable-static \
-	--with-doc-dir=%{_docdir}/%{name}
-make 
-### %{?_smp_mflags}
+	--disable-docs
 
-%check
-make check
+make %{?jobs:-j%jobs}
 
 %install
+mkdir -p %{buildroot}/usr/share/license
+cp COPYING %{buildroot}/usr/share/license/%{name}
 %make_install
-%find_lang %{name}-12
+#%find_lang %{name}-12
 
 %post  -p /sbin/ldconfig
 
 %postun  -p /sbin/ldconfig
 
-%files -f %{name}-12.lang
+#%files -f %{name}-12.lang
+%files
 %manifest %{name}.manifest
-%license COPYING
 %defattr(-,root,root)
 %{_libdir}/*.so.*
+%{_datadir}/license/%{name}
 
 %files devel
-%manifest %{name}.manifest
 %defattr(-,root,root)
-%doc %{_docdir}/%{name}
+%{_includedir}/libexif
 %{_libdir}/*.so
-%{_libdir}/pkgconfig/*.pc
-%{_includedir}/*
+%{_libdir}/pkgconfig/libexif.pc
 
-%changelog

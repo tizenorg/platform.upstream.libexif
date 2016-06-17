@@ -10,6 +10,10 @@ AM_MAINTAINER_MODE
 m4_ifndef([AM_SILENT_RULES], [m4_define([AM_SILENT_RULES],[])])
 AM_SILENT_RULES([no])
 
+# Checks for programs.
+m4_pattern_allow([AM_PROG_AR])
+AM_PROG_AR
+
 if test ! -d "$srcdir/m4m"; then
 AC_MSG_ERROR([
 You are missing the m4m/ directory in your top
@@ -98,6 +102,10 @@ AC_ARG_ENABLE([ship-binaries],
 ])
 AM_CONDITIONAL([SHIP_BINARIES],[$ship_binaries])
 GP_CONFIG_MSG([Ship binaries in tarball],[$ship_binaries])
+
+enable_docs=false
+AM_CONDITIONAL([BUILD_DOCS],[$enable_docs])
+AM_CONDITIONAL([HAVE_DOXYGEN],[$enable_docs])
 
 
 dnl ---------------------------------------------------------------------------
